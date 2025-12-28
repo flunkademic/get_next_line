@@ -1,22 +1,45 @@
 # get_next_line
 
-Read one line at a time from a file descriptor efficiently.
+Reads one line at a time from a file descriptor.
 
----
+This 42 project focuses on reading files efficiently while practicing dynamic memory management.
 
-`get_next_line` is a function to read one line at a time from a file descriptor in C.  
-This project was part of the 42 curriculum and helped improve skills in file handling, dynamic memory management, and efficient C programming.
-
-## Features
+## What’s in it
 - Reads from any file descriptor
-- Handles variable-length lines
-- Efficient memory usage
+- Handles lines of any length
+- Minimal memory usage
 
-## Usage
-Include `get_next_line.h` and compile `get_next_line.c` with your project:
+## How to use
+A Makefile is included. Simply run:
 ```bash
-cc -Wall -Wextra -Werror get_next_line.c -o main
+make
 ```
+This will compile get_next_line.c and create get_next_line.a.
 
-Note
+Include get_next_line.h in your project and link with the library.
+
+## Example:
+
+```
+#include "get_next_line.h"
+#include <stdio.h>
+#include <fcntl.h>
+
+int main(void)
+{
+    int fd = open("file.txt", O_RDONLY);
+    char *line;
+
+    while ((line = get_next_line(fd)))
+    {
+        printf("%s", line);
+        free(line);
+    }
+    close(fd);
+    return 0;
+}
+```
+---
+## Note
+
 This code is for educational purposes only and should not be copied for assignments or projects elsewhere.
