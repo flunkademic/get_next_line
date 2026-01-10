@@ -111,6 +111,31 @@ Because a file cannot always be read line-by-line in a single `read()` call, unr
 * Respects project constraints (no forbidden functions, controlled memory usage)
 * Matches the expected behavior of real-world line readers
 
+## Bonus
+
+### Multiple File Descriptor Support
+
+The bonus version of `get_next_line()` allows reading from multiple file
+descriptors simultaneously without losing track of each reading state.
+
+This is achieved by using a single static variable:
+an array of pointers indexed by file descriptor (`OPEN_MAX`).
+
+Each index stores the remaining unread data (stash) associated with its
+corresponding file descriptor. This design ensures that alternating calls
+to `get_next_line()` with different file descriptors correctly resume
+reading from the appropriate position in each file.
+
+### Key Differences from Mandatory Part
+
+- Uses a single static array instead of a single static pointer
+- Each file descriptor maintains its own independent stash
+- Allows interleaved reads across multiple file descriptors
+- Does not affect or modify the mandatory implementation
+
+The bonus implementation is provided in separate files suffixed with
+`_bonus`, as required by the subject.
+
 
 ## Resources
 
